@@ -19,7 +19,7 @@ app.use('/static',express.static(path.join(__dirname,)))
 app.use(session({
     secret:uuidv4(), //uuid
     resave:false,
-    saveUninitialized:true
+    saveUninitialized:false
 }))
 
 app.use('/route',router)
@@ -27,5 +27,6 @@ app.use('/route',router)
 app.get('/',(req,res)=>{
     res.render('base',{title:"loginSystem"})
 })
+
 
 app.listen(port,()=>{console.log("hosting to the server on http://localhost:7000")});

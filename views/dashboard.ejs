@@ -3,8 +3,9 @@
 <div class="test-center center-div mat-5">
 
     <h3>welocome to dashboard</h3>
-    <h5><%=locals.user?user:"User" %></h5>
-    <a href="/route/logout"></a>
+    <h5><%=locals.user?user:"User logged out" %></h5>
+    <a href="/route/logout">Logout</a>
+ 
 </div>
 
 <%-include('footer')-%>

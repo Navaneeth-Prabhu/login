@@ -1,6 +1,21 @@
 var express = require("express")
 var router = express.Router();
 
+
+
+//route for dashboard
+router.get('/dashboard',(req,res)=>{
+    if(req.session.user){
+        res.render('dashboard',{user:req.session.user})
+    }
+    else{
+        res.redirect('/login')
+        // res.redirect('/route/dashboard')
+        // res.send("unautherized user")
+    }
+});
+
+
 const credential = {
     email:"nav@gmail.com",
     password: "nav123"
@@ -13,20 +28,11 @@ router.post('/login',(req,res)=>{
         // res.end("login sucessfull ..")
     }
     else {
-        res.end("invalid username")
+        // res.redirect('/login')
+        res.end("invalid username or password")
     
     }
 });
-
-//route for dashboard
-router.get('/dashboard',(req,res)=>{
-    if(req.session.user){
-        res.render('dashboard',{user:req.session.user})
-    }
-    else{
-        res.send("unauthorized user")
-    }
-})
 
 //route for 
 router.get('/logout',(req,res)=>{
@@ -36,9 +42,11 @@ router.get('/logout',(req,res)=>{
             res.send("Error")
         }
         else{
-            res.render('base',{title:"Express",logout:"logout Scuessfully"})
+            res.redirect('/route/dashboard')
+            // res.render('base',{title:"Express",logout:"logout Scuessfully"})
         }
     })
 })
+
 
 module.exports = router; 
