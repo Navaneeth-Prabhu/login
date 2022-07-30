@@ -1,52 +1,50 @@
-var express = require("express")
+var express = require("express");
 var router = express.Router();
 
-
-
 //route for dashboard
-router.get('/dashboard',(req,res)=>{
-    if(req.session.user){
-        res.render('dashboard',{user:req.session.user})
-    }
-    else{
-        res.redirect('/login')
-        // res.redirect('/route/dashboard')
-        // res.send("unautherized user")
-    }
+router.get("/", (req, res) => {
+  if (req.session.user) {
+    res.render("dashboard", { user: req.session.user });
+  } else {
+    res.redirect("/login");
+  }
 });
-
 
 const credential = {
-    email:"nav@gmail.com",
-    password: "nav123"
-}
+  email: "nav@gmail.com",
+  password: "nav123",
+};
 
-router.post('/login',(req,res)=>{
-    if(req.body.email == credential.email && req.body.password == credential.password){
-        req.session.user = req.body.email;
-        res.redirect('/route/dashboard')
-        // res.end("login sucessfull ..")
-    }
-    else {
-        // res.redirect('/login')
-        res.end("invalid username or password")
-    
-    }
+router.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.redirect("/");
+  } else {
+    res.render("base", { title: "loginSystem" });
+  }
 });
 
-//route for 
-router.get('/logout',(req,res)=>{
-    req.session.destroy(function(err){
-        if(err){
-            console.log(err);
-            res.send("Error")
-        }
-        else{
-            res.redirect('/route/dashboard')
-            // res.render('base',{title:"Express",logout:"logout Scuessfully"})
-        }
-    })
-})
+router.post("/login", (req, res) => {
+  if (
+    req.body.email == credential.email &&
+    req.body.password == credential.password
+  ) {
+    req.session.user = req.body.email;
+    res.redirect("/login");
+  } else {
+    res.end("invalid username or password");
+  }
+});
 
+//route for
+router.get("/logout", (req, res) => {
+  req.session.destroy(function (err) {
+    if (err) {
+      console.log(err);
+      res.send("Error");
+    } else {
+      res.redirect("/");
+    }
+  });
+});
 
-module.exports = router; 
+module.exports = router;
