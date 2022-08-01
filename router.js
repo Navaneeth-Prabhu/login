@@ -31,7 +31,8 @@ router.post("/login", (req, res) => {
     req.session.user = req.body.email;
     res.redirect("/login");
   } else {
-    res.end("invalid username or password");
+    err_msg="invalid username or password";
+    res.render("base",{err_msg:err_msg});
   }
 });
 
